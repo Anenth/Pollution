@@ -9,7 +9,7 @@ var config = {
       name: 'code'
     },
     port: 3000,
-    db: 'mongodb://localhost/code-development'
+    db: 'mongodb://anenth:-6r#=T514awAuVPb^@ds043262.mongolab.com:43262/polution'
   },
 
   test: {
@@ -18,7 +18,7 @@ var config = {
       name: 'code'
     },
     port: 3000,
-    db: 'mongodb://localhost/code-test'
+    db: 'mongodb://anenth:-6r#=T514awAuVPb^@ds043262.mongolab.com:43262/polution'
   },
 
   production: {
@@ -27,7 +27,7 @@ var config = {
       name: 'code'
     },
     port: 3000,
-    db: 'mongodb://localhost/code-production'
+    db: 'mongodb://anenth:-6r#=T514awAuVPb^@ds043262.mongolab.com:43262/polution'
   }
 };
 

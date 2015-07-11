@@ -20,7 +20,7 @@ gulp.task('develop', function () {
   livereload.listen();
   nodemon({
     script: 'app.js',
-    ext: 'js coffee jade',
+    ext: 'js jade',
   }).on('restart', function () {
     setTimeout(function () {
       livereload.changed(__dirname);
