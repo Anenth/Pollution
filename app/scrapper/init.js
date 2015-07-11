@@ -1,5 +1,4 @@
-var express = require('express'),
-mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
 request = require('request'),
 cheerio = require('cheerio'),
 config = require('../../config/config'),
