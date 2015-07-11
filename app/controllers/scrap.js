@@ -1,9 +1,6 @@
 var express = require('express'),
   router = express.Router(),
-  mongoose = require('mongoose'),
-  request = require('request'),
-  cheerio = require('cheerio'),
-  Polution = mongoose.model('Polution');
+  mongoose = require('mongoose');
 
 module.exports = function (app) {
   app.use('/scrap', router);

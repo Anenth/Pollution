@@ -9,13 +9,15 @@ var Pollution = new Schema({
   Unit: String,
   PrescribedStandard: String,
   Remarks: String,
+  DataPoint: {
+    station: String,
+    Name: Array,
+    stateId: Number,
+    cityId: Number,
+    url: String
+  }
 
 });
-
-// Pollution.virtual('date')
-//   .get(function(){
-//     return this._id.getTimestamp();
-//   });
 
 mongoose.model('Pollution', Pollution);
 
