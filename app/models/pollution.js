@@ -11,7 +11,7 @@ var Pollution = new Schema({
   Remarks: String,
   DataPoint: {
     station: String,
-    Name: Array,
+    name: Array,
     stateId: Number,
     cityId: Number,
     url: String
