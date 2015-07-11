@@ -6,14 +6,8 @@ config = require('../../config/config'),
 modal = require('../models/pollution'),
 Pollution = mongoose.model('Pollution');
 
-var db = mongoose.connection;
-mongoose.connect(config.db);
 
-db.on('error', function () {
-  throw new Error('unable to connect to database at ' + config.db);
-});
-
-var DATAPOINTS = [
+const DATAPOINTS = [
   {
     station: 'BTM',
     Name: ['South Bengaluru', 'Peenya'],
@@ -51,48 +45,67 @@ const selectors = {
 
 const ignoreString = 'Prescribed Standard for CO and OZONE is one hourly Average';
 
-DATAPOINTS.forEach(function(dataPoint){
+var Scrapper = {
+  initialize: function(){
+    var db = mongoose.connection;
+    mongoose.connect(config.db);
 
-  request(dataPoint.url, function(error, response, html){
-    if(!error){
-      var $ = cheerio.load(html);
-      var rows = $(selectors.tableRow);
-      var rowsLength = rows.length - 1;
+    db.on('error', function () {
+      throw new Error('unable to connect to database at ' + config.db);
+    });
+  },
 
-      rows.each(function(i, row) {
-        // Remove the table header
-        if(i === 0) return;
+  start: function(){
+    this.initialize();
+    this.run();
+  },
 
-        var $row = $(this);
-        var rowData = {};
+  run: function(){
+    DATAPOINTS.forEach(function(dataPoint){
+      request(dataPoint.url, function(error, response, html){
+        if(!error){
+          var $ = cheerio.load(html);
+          var rows = $(selectors.tableRow);
+          var rowsLength = rows.length - 1;
 
-        if(i === rowsLength && $row.text().indexOf(ignoreString)) return;
+          rows.each(function(i, row) {
+            // Remove the table header
+            if(i === 0) return;
 
-        $row.find(selectors.item).each(function(i, item) {
-          var $item = $(this);
-          var value = $item.text();
-          if(i === 3){
-            value = parseInt(value);
-          }
-          var attribute = TABLE_STRUCT[i];
-          rowData[attribute] = value;
-        })
-        saveData(rowData, dataPoint);
+            var $row = $(this);
+            var rowData = {};
+
+            if(i === rowsLength && $row.text().indexOf(ignoreString)) return;
+
+            $row.find(selectors.item).each(function(i, item) {
+              var $item = $(this);
+              var value = $item.text();
+              if(i === 3){
+                value = parseInt(value);
+              }
+              var attribute = TABLE_STRUCT[i];
+              rowData[attribute] = value;
+            })
+            Scrapper.saveData(rowData, dataPoint);
+          })
+
+        }
       })
+    });
+    },
 
+    saveData: function(data, dataPoint){
+      data['DataPoint'] = dataPoint;
+      var pollutionRow = new Pollution(data);
+      pollutionRow.save(function (err, data) {
+        console.log(data);
+        if (err) return Scrapper.handleError(err);
+      });
+    },
+
+    handleError: function(err){
+      console.error('Error', err);
     }
-  })
-
-});
-
-var saveData = function(data, dataPoint){
-  data['DataPoint'] = dataPoint;
-  var pollutionRow = new Pollution(data);
-  pollutionRow.save(function (err, data) {
-    if (err) return handleError(err);
-  });
 }
 
-var handleError = function(err){
-  console.error('Error', err);
-}
+module.exports = Scrapper;
