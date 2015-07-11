@@ -7,25 +7,25 @@ Pollution = mongoose.model('Pollution');
 
 
 const DATAPOINTS = [
-  {
-    station: 'BTM',
-    Name: ['South Bengaluru', 'Peenya'],
-    stateId: 13,
-    cityId: 136,
-    url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=BTM&StateId=13&CityId=136'
-  },{
-    station: 'Peenya',
-    Name: ['North Bengaluru', 'Peenya'],
-    stateId: 13,
-    cityId: 136,
-    url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=Peenya&StateId=13&CityId=136'
-  },{
-    station: 'BWSSB',
-    Name: ['Central Bengaluru', 'Kadabesanahalli'],
-    stateId: 13,
-    cityId: 136,
-    url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=BWSSB&StateId=13&CityId=136'
-  }
+{
+  station: 'BTM',
+  Name: ['South Bengaluru', 'Peenya'],
+  stateId: 13,
+  cityId: 136,
+  url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=BTM&StateId=13&CityId=136'
+},{
+  station: 'Peenya',
+  Name: ['North Bengaluru', 'Peenya'],
+  stateId: 13,
+  cityId: 136,
+  url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=Peenya&StateId=13&CityId=136'
+},{
+  station: 'BWSSB',
+  Name: ['Central Bengaluru', 'Kadabesanahalli'],
+  stateId: 13,
+  cityId: 136,
+  url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=BWSSB&StateId=13&CityId=136'
+}
 ];
 
 const TABLE_STRUCT = [
@@ -47,10 +47,10 @@ const ignoreString = 'Prescribed Standard for CO and OZONE is one hourly Average
 var Scrapper = {
   initialize: function(){
     var db = mongoose.connection;
-    mongoose.connect(config.db);
+    mongoose.createConnection(config.db);
 
-    db.on('error', function () {
-      throw new Error('unable to connect to database at ' + config.db);
+    db.on('error', function (error) {
+      throw new Error('unable to connect to database at ' + config.db, error);
     });
   },
 
@@ -85,26 +85,26 @@ var Scrapper = {
               var attribute = TABLE_STRUCT[i];
               rowData[attribute] = value;
             })
-            Scrapper.saveData(rowData, dataPoint);
+            saveData(rowData, dataPoint);
           })
 
         }
       })
     });
-    },
-
-    saveData: function(data, dataPoint){
-      data['DataPoint'] = dataPoint;
-      var pollutionRow = new Pollution(data);
-      pollutionRow.save(function (err, data) {
-        console.log(data);
-        if (err) return Scrapper.handleError(err);
-      });
-    },
-
-    handleError: function(err){
-      console.error('Error', err);
-    }
+  },
 }
+
+var saveData = function(data, dataPoint){
+  data['DataPoint'] = dataPoint;
+  var pollutionRow = new Pollution(data);
+  pollutionRow.save(function (err, data) {
+    console.log(data);
+    if (err) return handleError(err);
+  });
+};
+
+var handleError = function(err){
+  console.error('Error', err);
+};
 
 module.exports = Scrapper;
