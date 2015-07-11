@@ -31,6 +31,8 @@ request(URL, function(error, response, html){
       item: 'td'
     }
 
+    var ignoreString = 'Prescribed Standard for CO and OZONE is one hourly Average';
+
     var handleError = function(err){
       console.error('Error', err);
     }
@@ -49,10 +51,12 @@ request(URL, function(error, response, html){
 
     rows.each(function(i, row) {
       // Remove the table header and table footer
-      if(i === 0 || i === rowsLength) return;
+      if(i === 0) return;
 
       var $row = $(this);
       var rowData = {};
+
+      if(i === rowsLength && $row.text().indexOf(ignoreString)) return;
 
       $row.find(selectors.item).each(function(i, item) {
         var $item = $(this);
