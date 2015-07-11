@@ -10,7 +10,6 @@ db.on('error', function () {
 });
 
 
-
 var models = glob.sync(config.root + '/app/models/*.js');
 models.forEach(function (model) {
   require(model);
@@ -20,8 +19,3 @@ var app = express();
 require('./config/express')(app, config);
 
 app.listen(config.port);
-
-
-app.get('http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=BTM&StateId=13&CityId=136', function(request){
-  console.log(request);
-})

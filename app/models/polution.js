@@ -2,10 +2,12 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var Polution = new Schema({
+  NOX: Number,
+  NO: Number,
   NO2: Number,
   SO2: Number,
-  text: Number,
-  time: Date,
+  PM25: Number,
+  time: Date
 });
 
 Polution.virtual('date')
