@@ -4,6 +4,22 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
-  ]
+    "components",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/Anenth/Polution",
+  "authors": [
+    "Anenth <anenthvishnu@gmail.com>"
+  ],
+  "moduleType": [
+    "amd",
+    "es6"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "material-design-lite": "~1.0.0"
+  }
 }
