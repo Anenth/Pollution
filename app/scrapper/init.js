@@ -79,8 +79,15 @@ var Scrapper = {
             $row.find(selectors.item).each(function(i, item) {
               var $item = $(this);
               var value = $item.text();
-              if(i === 3){
-                value = parseInt(value);
+              switch(i){
+                case 2:
+                  var date = rowData['Date'].split('/');
+                  var time = value.split(':');
+                  value = new Date(date[2], (parseInt(date[1]) - 1), date[0], time[0], time[1], time[2]);
+                break;
+                case 3:
+                  value = parseInt(value);
+                break;
               }
               var attribute = TABLE_STRUCT[i];
               rowData[attribute] = value;
@@ -96,8 +103,8 @@ var Scrapper = {
   saveData: function(data, dataPoint){
     data['DataPoint'] = dataPoint;
     var pollutionRow = new Pollution(data);
+    console.log(data);
     pollutionRow.save(function (err, data) {
-      console.log(data);
       if (err) return Scrapper.handleError(err);
     });
   },

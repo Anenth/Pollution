@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 var Pollution = new Schema({
   Parameters: String,
   Date: String,
-  Time: String,
+  Time: Date,
   Concentration: Number,
   Unit: String,
   PrescribedStandard: String,
