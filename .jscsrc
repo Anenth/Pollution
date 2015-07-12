@@ -1,0 +1,5 @@
+{   "preset": "airbnb",
+    "validateIndentation": 2,
+    "esprima": "esprima-fb",
+    "fileExtensions": [".js", ".jsx"]
+}
