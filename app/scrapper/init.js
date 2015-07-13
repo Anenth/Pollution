@@ -71,9 +71,9 @@ var Scrapper = {
     var pollutionRow = new Pollution(data);
     console.log(data);
 
-    // pollutionRow.save(function (err, data) {
-    //   if (err) return Scrapper.handleError(err);
-    // });
+    pollutionRow.save(function(err, data) {
+      if (err) return Scrapper.handleError(err);
+    });
   },
 
   handleError: function(err) {
