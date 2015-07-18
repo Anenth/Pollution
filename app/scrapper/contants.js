@@ -22,13 +22,13 @@ module.exports = {
   ],
 
   TABLE_STRUCT: [
-  'Parameters',
-  'Date',
-  'Time',
-  'Concentration',
-  'Unit',
-  'PrescribedStandard',
-  'Remarks'],
+  'parameters',
+  'date',
+  'time',
+  'concentration',
+  'unit',
+  'prescribedStandard',
+  'remarks'],
 
   selectors: {
     tableRow: '#lblReportCurrentData > table tr',

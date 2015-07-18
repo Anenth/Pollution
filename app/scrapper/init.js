@@ -1,11 +1,11 @@
-var mongoose = require('mongoose'),
-request = require('request'),
-cheerio = require('cheerio'),
-config = require('../../config/config'),
-modal = require('../models/pollution'),
-contants = require('./contants'),
-Calc = require('./indexCalculator'),
-Pollution = mongoose.model('Pollution');
+var mongoose = require('mongoose');
+var request = require('request');
+var cheerio = require('cheerio');
+var config = require('../../config/config');
+var modal = require('../models/pollution');
+var contants = require('./contants');
+var Calc = require('./indexCalculator');
+var Pollution = mongoose.model('Pollution');
 
 var selectors = contants.selectors;
 
@@ -46,7 +46,7 @@ var Scrapper = {
               var value = $item.text();
               switch (i){
                 case 2:
-                  var date = rowData['Date'].split('/');
+                  var date = rowData['date'].split('/');
                   var time = value.split(':');
                   value = new Date(date[2], (parseInt(date[1]) - 1), date[0], time[0], time[1], time[2]);
                 break;
@@ -57,7 +57,7 @@ var Scrapper = {
               var attribute = contants.TABLE_STRUCT[i];
               rowData[attribute] = value;
             })
-            rowData['index'] = Calc.getIndexOf(rowData['Parameters'], rowData['Concentration']);
+            rowData['index'] = Calc.getIndexOf(rowData['parameters'], rowData['concentration']);
             Scrapper.saveData(rowData, dataPoint);
           })
 
@@ -67,12 +67,12 @@ var Scrapper = {
   },
 
   saveData: function(data, dataPoint) {
-    data['DataPoint'] = dataPoint;
+    data['datapoint'] = dataPoint;
     var pollutionRow = new Pollution(data);
-    console.log(data);
 
     pollutionRow.save(function(err, data) {
       if (err) return Scrapper.handleError(err);
+    console.log(data);
     });
   },
 

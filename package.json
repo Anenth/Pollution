@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "get-secrets" : "git clone https://gist.github.com/3492f2c8b5869235c5f7.git config/secrets"
   },
   "dependencies": {
     "body-parser": "~1.12.0",
