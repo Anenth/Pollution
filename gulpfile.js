@@ -1,6 +1,12 @@
 var gulp = require('gulp');
-var gulpLoadPlugins = require('gulp-load-plugins');
-var $ = gulpLoadPlugins();
+var $ = require('gulp-load-plugins')();
+$css = {
+  cssnext: require('cssnext'),
+  autoprefixer: require('autoprefixer-core'),
+  mqpacker: require('css-mqpacker'),
+  csswring: require('csswring'),
+};
+
 const PATH = {
   JS:{
     SRC: './static/js/app.js',
@@ -12,7 +18,7 @@ const PATH = {
   },
   IMG: {
     SRC: './static/img/',
-    DEST: './dist/img/'
+    DEST: './public/img/'
   }
 };
 
@@ -26,17 +32,22 @@ const PATH = {
 
 gulp.task('css', function() {
   var processors = [
-      $.autoprefixer({browsers: ['last 1 version']}),
-      $.mqpacker,
-      $.csswring
+      $css.autoprefixer({browsers: ['last 1 version']}),
+      $css.mqpacker,
+      $css.csswring,
+      $css.cssnext(),
   ];
   return gulp.src(PATH.CSS.SRC)
+      .pipe($.sourcemaps.init())
       .pipe($.postcss(processors))
-      .pipe(gulp.dest(PATH.CSS.DIST));
+      .pipe($.rename('style.css'))
+      .pipe($.sourcemaps.write('.'))
+      .pipe(gulp.dest(PATH.CSS.DEST));
 });
 
 gulp.task('watch', function() {
   gulp.watch(PATH.CSS.SRC, ['css']);
+
   // gulp.watch('/public/js/src/*.js', ['js']);
 });
 
@@ -56,7 +67,7 @@ gulp.task('js', function() {
         insertGlobals: true,
         debug: true
       }))
-      .pipe(gulp.dest(PATH.JS.DIST));
+      .pipe(gulp.dest(PATH.JS.DEST));
 });
 
 gulp.task('server', function() {

@@ -1,9 +1,15 @@
-/*import(//fonts.googleapis.com/icon?family=Material+Icons')
-link(rel='stylesheet', href='/node_modules/material-design-lite/material.min.css')
+@import "material-design-lite/material.min.css";
+@import "//fonts.googleapis.com/icon?family=Material+Icons";
 
-*/
+:root {
+--fontSize: 1rem;
+--mainColor: #12345678;
+--highlightColor: hwb(190, 35%, 20%);
+}
+
 body {
   padding: 50px;
+  color: var(--mainColor);
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
