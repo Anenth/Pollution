@@ -1,10 +1,16 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var babelify = require('babelify');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+
 $css = {
   cssnext: require('cssnext'),
   autoprefixer: require('autoprefixer-core'),
   mqpacker: require('css-mqpacker'),
-  csswring: require('csswring'),
+  csswring: require('csswring')
 };
 
 const PATH = {
@@ -22,20 +28,12 @@ const PATH = {
   }
 };
 
-// gulp.task('sass', function() {
-//   gulp.src('./public/css/*.scss')
-//     .pipe($.plumber())
-//     .pipe($.sass())
-//     .pipe(gulp.dest('./public/css'))
-//     .pipe($.livereload());
-// });
-
 gulp.task('css', function() {
   var processors = [
       $css.autoprefixer({browsers: ['last 1 version']}),
       $css.mqpacker,
       $css.csswring,
-      $css.cssnext(),
+      $css.cssnext()
   ];
   return gulp.src(PATH.CSS.SRC)
       .pipe($.sourcemaps.init())
@@ -47,28 +45,40 @@ gulp.task('css', function() {
 
 gulp.task('watch', function() {
   gulp.watch(PATH.CSS.SRC, ['css']);
-
-  // gulp.watch('/public/js/src/*.js', ['js']);
 });
-
-// gulp.task('js', function () {
-//   return gulp.src('./public/js/src/*.js')
-//     .pipe(sourcemaps.init())
-//     .pipe(watch())
-//     .pipe(concat('all.js'))
-//     .pipe(babel())
-//     .pipe(sourcemaps.write('.'))
-//     .pipe(gulp.dest('./public/js/'));
-// });
 
 gulp.task('js', function() {
-  gulp.src(PATH.JS.SRC)
-      .pipe($.browserify({
-        insertGlobals: true,
-        debug: true
-      }))
-      .pipe(gulp.dest(PATH.JS.DEST));
+  return compile();
 });
+
+gulp.task('js:watch', function() {
+  return compile(true);
+});
+
+function compile(watch) {
+  var bundler = watchify(browserify(PATH.JS.SRC, { debug: true }).transform(babelify));
+
+  function rebundle() {
+    bundler.bundle()
+      .on('error', function(err) {
+        console.error(err); this.emit('end');
+      })
+     .pipe(source('all.js'))
+     .pipe(buffer())
+     .pipe($.sourcemaps.init({ loadMaps: true }))
+     .pipe($.sourcemaps.write('./'))
+     .pipe(gulp.dest(PATH.JS.DEST));
+  }
+
+  if (watch) {
+    bundler.on('update', function() {
+      console.log('-> bundling...');
+      rebundle();
+    });
+  }
+
+  rebundle();
+}
 
 gulp.task('server', function() {
   $.livereload.listen();
@@ -83,9 +93,10 @@ gulp.task('server', function() {
 });
 
 gulp.task('default', [
-  'css',
+  'build',
   'server',
-  'watch'
+  'watch',
+  'js:watch'
 ]);
 
 gulp.task('build', [
