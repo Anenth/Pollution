@@ -1,4 +1,7 @@
 node_modules/
-public/components
+static/components
 .sass-cache
 config/secrets
+public/css
+public/img
+public/js

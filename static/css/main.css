@@ -1,0 +1,12 @@
+/*import(//fonts.googleapis.com/icon?family=Material+Icons')
+link(rel='stylesheet', href='/node_modules/material-design-lite/material.min.css')
+
+*/
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}

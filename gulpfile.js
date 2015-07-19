@@ -1,59 +1,83 @@
-var gulp = require('gulp'),
-  nodemon = require('gulp-nodemon'),
-  plumber = require('gulp-plumber'),
-  livereload = require('gulp-livereload'),
-  sass = require('gulp-sass'),
-  sourcemaps = require("gulp-sourcemaps"),
-  babel = require("gulp-babel"),
-  browserify = require("gulp-browserify"),
-  concat = require("gulp-concat");
+var gulp = require('gulp');
+var gulpLoadPlugins = require('gulp-load-plugins');
+var $ = gulpLoadPlugins();
+const PATH = {
+  JS:{
+    SRC: './static/js/app.js',
+    DEST: './public/js/'
+  },
+  CSS:{
+    SRC: './static/css/main.css',
+    DEST: './public/css/'
+  },
+  IMG: {
+    SRC: './static/img/',
+    DEST: './dist/img/'
+  }
+};
 
-gulp.task('sass', function () {
-  gulp.src('./public/css/*.scss')
-    .pipe(plumber())
-    .pipe(sass())
-    .pipe(gulp.dest('./public/css'))
-    .pipe(livereload());
+// gulp.task('sass', function() {
+//   gulp.src('./public/css/*.scss')
+//     .pipe($.plumber())
+//     .pipe($.sass())
+//     .pipe(gulp.dest('./public/css'))
+//     .pipe($.livereload());
+// });
+
+gulp.task('css', function() {
+  var processors = [
+      $.autoprefixer({browsers: ['last 1 version']}),
+      $.mqpacker,
+      $.csswring
+  ];
+  return gulp.src(PATH.CSS.SRC)
+      .pipe($.postcss(processors))
+      .pipe(gulp.dest(PATH.CSS.DIST));
 });
 
 gulp.task('watch', function() {
-  // gulp.watch('./public/css/*.scss', ['sass']);
-  gulp.watch('/public/js/src/*.js', ['js']);
+  gulp.watch(PATH.CSS.SRC, ['css']);
+  // gulp.watch('/public/js/src/*.js', ['js']);
 });
 
-// gulp.task("js", function () {
-//   return gulp.src("./public/js/src/*.js")
+// gulp.task('js', function () {
+//   return gulp.src('./public/js/src/*.js')
 //     .pipe(sourcemaps.init())
 //     .pipe(watch())
-//     .pipe(concat("all.js"))
+//     .pipe(concat('all.js'))
 //     .pipe(babel())
-//     .pipe(sourcemaps.write("."))
-//     .pipe(gulp.dest("./public/js/"));
+//     .pipe(sourcemaps.write('.'))
+//     .pipe(gulp.dest('./public/js/'));
 // });
 
-gulp.task("js", function () {
-  gulp.src('./public/js/src/*.js')
-      .pipe(browserify({
-        insertGlobals : true,
-        debug : true
+gulp.task('js', function() {
+  gulp.src(PATH.JS.SRC)
+      .pipe($.browserify({
+        insertGlobals: true,
+        debug: true
       }))
-      .pipe(gulp.dest('./public/js/'));
+      .pipe(gulp.dest(PATH.JS.DIST));
 });
 
-gulp.task('develop', function () {
-  livereload.listen();
-  nodemon({
+gulp.task('server', function() {
+  $.livereload.listen();
+  $.nodemon({
     script: 'app.js',
-    ext: 'js jade',
-  }).on('restart', function () {
-    setTimeout(function () {
-      livereload.changed(__dirname);
+    ext: 'js jade'
+  }).on('restart', function() {
+    setTimeout(function() {
+      $.livereload.changed(__dirname);
     }, 500);
   });
 });
 
 gulp.task('default', [
-  'sass',
-  'develop',
+  'css',
+  'server',
   'watch'
+]);
+
+gulp.task('build', [
+  'css',
+  'js'
 ]);
