@@ -1,10 +1,11 @@
-var objTest= require("./init.js");
+var objTest = require('./init.js');
 var CronJob = require('cron').CronJob;
 var job = new CronJob({
   cronTime: '0 */15 * * * *',
   onTick: function() {
-        objTest.start();
+    objTest.start();
   },
-  start: false,
+
+  start: false
 });
 job.start();

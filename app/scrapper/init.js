@@ -57,6 +57,7 @@ var Scrapper = {
               var attribute = contants.TABLE_STRUCT[i];
               rowData[attribute] = value;
             })
+
             rowData['index'] = Calc.getIndexOf(rowData['parameters'], rowData['concentration']);
             Scrapper.saveData(rowData, dataPoint);
           })
@@ -72,7 +73,7 @@ var Scrapper = {
 
     pollutionRow.save(function(err, data) {
       if (err) return Scrapper.handleError(err);
-    console.log(data);
+      console.log(data);
     });
   },
 
