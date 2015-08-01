@@ -2,7 +2,7 @@ module.exports = {
   DATAPOINTS: [
   {
     station: 'BTM',
-    name: ['South Bengaluru', 'Peenya'],
+    name: ['South Bengaluru', 'BTM'],
     stateId: 13,
     cityId: 136,
     url: 'http://www.cpcb.gov.in/CAAQM/frmCurrentDataNew.aspx?StationName=BTM&StateId=13&CityId=136'
@@ -40,7 +40,8 @@ module.exports = {
   parameter: {
     CO: 'Carbon Monoxide',
     PM2: 'PM 2.5',
-    SO2: 'Sulfur Dioxide'
+    SO2: 'Sulfur Dioxide',
+    O3: 'Ozone'
   }
 
 }

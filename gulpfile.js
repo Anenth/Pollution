@@ -10,7 +10,9 @@ $css = {
   cssnext: require('cssnext'),
   autoprefixer: require('autoprefixer-core'),
   mqpacker: require('css-mqpacker'),
-  csswring: require('csswring')
+  csswring: require('csswring'),
+  extends: require('postcss-extend'),
+  nested: require('postcss-nested')
 };
 
 const PATH = {
@@ -31,9 +33,11 @@ const PATH = {
 gulp.task('css', function() {
   var processors = [
       $css.autoprefixer({browsers: ['last 1 version']}),
+      $css.cssnext(),
       $css.mqpacker,
-      $css.csswring,
-      $css.cssnext()
+      $css.extends(),
+      $css.nested,
+      $css.csswring
   ];
   return gulp.src(PATH.CSS.SRC)
       .pipe($.sourcemaps.init())
@@ -87,8 +91,7 @@ gulp.task('server', function() {
     ext: 'js jade'
   }).on('restart', function() {
     setTimeout(function() {
-      $.livereload.changed(__dirname);
-    }, 500);
+    }, 10);
   });
 });
 

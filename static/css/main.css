@@ -1,4 +1,4 @@
-@import "material-design-lite/material.min.css";
+@import "material-design-lite/material";
 
 :root {
 --fontSize: 1rem;
@@ -6,12 +6,11 @@
 --highlightColor: hwb(190, 35%, 20%);
 }
 
-body {
-  padding: 50px;
-  color: var(--mainColor);
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
-a {
-  color: #00B7FF;
+.box {
+  @extend .mdl-color--white;
+  @extend .mdl-shadow--4dp;
+  @extend .mdl-color-text--grey-800;
+
+  padding: 20px;
 }

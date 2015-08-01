@@ -1,18 +1,45 @@
 doctype html
 html(lang='en')
   head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='description', content='Air Pollutant')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     title= title
     block css
-      link(rel='stylesheet', href='/css/style.css')
-      link(rel='stylesheet', href='//fonts.googleapis.com/icon?family=Material+Icons')
+      link(href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en', rel='stylesheet')
+      link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+      link(rel='stylesheet', href='./css/style.css')
 
     block js
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
   body
-    block content
+    .mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+      header.mdl-layout__header
+        .mdl-layout__header-row
+          a.mdl-layout-title(href='/') Air Pollutant
+          .mdl-layout-spacer
+          nav.mdl-navigation
+            a.mdl-navigation__link(href='/about') About
+      //- .mdl-layout__drawer
+      //-   span.mdl-layout-title Air Pollutant
+      //-   nav.mdl-navigation
+      //-     a.mdl-navigation__link(href='/about') About
+      main.mdl-layout__content
+        .page-content
+          block content
 
-    footer
-      script(src="/js/all.js")
+
+        footer.mdl-mini-footer
+          .mdl-mini-footer--left-section
+            .mdl-logo Air Pollutant
+            ul.mdl-mini-footer--link-list
+              li
+                a(href='#') Help
+              li
+                a(href='#') Privacy & Terms
+
+
+    script(src="./js/all.js")
+

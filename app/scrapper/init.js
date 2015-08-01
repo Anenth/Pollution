@@ -3,11 +3,11 @@ var request = require('request');
 var cheerio = require('cheerio');
 var config = require('../../config/config');
 var modal = require('../models/pollution');
-var contants = require('./contants');
+var constants = require('./constants');
 var Calc = require('./indexCalculator');
 var Pollution = mongoose.model('Pollution');
 
-var selectors = contants.selectors;
+var selectors = constants.selectors;
 
 var Scrapper = {
   initialize: function() {
@@ -25,7 +25,7 @@ var Scrapper = {
   },
 
   run: function() {
-    contants.DATAPOINTS.forEach(function(dataPoint) {
+    constants.DATAPOINTS.forEach(function(dataPoint) {
       request(dataPoint.url, function(error, response, html) {
         if (!error) {
           var $ = cheerio.load(html);
@@ -39,7 +39,7 @@ var Scrapper = {
             var $row = $(this);
             var rowData = {};
 
-            if (i === rowsLength && $row.text().indexOf(contants.ignoreString)) return;
+            if (i === rowsLength && $row.text().indexOf(constants.ignoreString)) return;
 
             $row.find(selectors.item).each(function(i, item) {
               var $item = $(this);
@@ -54,7 +54,7 @@ var Scrapper = {
                   value = parseInt(value);
                 break;
               }
-              var attribute = contants.TABLE_STRUCT[i];
+              var attribute = constants.TABLE_STRUCT[i];
               rowData[attribute] = value;
             })
 

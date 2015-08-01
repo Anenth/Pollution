@@ -3,23 +3,36 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Scrapper = require('../scrapper/init.js');
 var Pollution = mongoose.model('Pollution');
+var DATAPOINTS = require('../scrapper/constants').DATAPOINTS;
+var Promise = require('promise');
+var _ = require('underscore');
 
 module.exports = function(app) {
   app.use('/api', router);
 };
 
 router.get('/recent', function(req, res, next) {
-  var station = 'Peenya';
+  var promises = [];
+  DATAPOINTS.forEach(function(datapoint) {
+    var station = datapoint.station;
+    promises.push(new Promise(function(resolve, reject) {
+      Pollution.find({ 'datapoint.station': station})
+        .sort({time: -1})
+        .limit(10)
+        .exec(function(err, items) {
+          var maxItem = _.max(items, function(item) {
+            return item.index
+          });
 
-  Pollution.find({ 'DataPoint.station': station})
-    .sort({Time: -1})
-    .limit(20)
-    .exec(function(err, items) {
-      res.json({
-        title: 'Polution',
-        data: items
-      });
-    });
+          resolve(maxItem);
+        });
+    }))
+
+  });
+
+  Promise.all(promises).then(function(data) {
+    res.json(data);
+  })
 });
 
 router.get('/collect', function(req, res, next) {

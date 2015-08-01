@@ -1,21 +1,21 @@
-var contants = require('./contants');
+var constants = require('./constants');
 
 var IndexCalculator = {
   getIndexOf: function(parameter, value) {
     switch (parameter) {
-      case contants.parameter.PM2:
+      case constants.parameter.PM2:
         return calculateForPM2(value);
       break;
 
-      case contants.parameter.SO2:
+      case constants.parameter.SO2:
         return calculateForSO2(value);
       break;
 
-      case contants.parameter.CO:
+      case constants.parameter.CO:
         return calculateForCO(value);
       break;
 
-      case contants.parameter.O3:
+      case constants.parameter.O3:
         return calculateForO3(value);
       break;
 
