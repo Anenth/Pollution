@@ -14,3 +14,28 @@
 
   padding: 20px;
 }
+.pollutant-location {
+  &--1 .pollutant-location__parameter__value {
+    color: green;
+  }
+  &--2 .pollutant-location__parameter__value {
+    color: yellow;
+  }
+  &--3 .pollutant-location__parameter__value {
+    color: yellow;
+  }
+  &--4 .pollutant-location__parameter__value {
+    color: orange;
+  }
+  &--5 .pollutant-location__parameter__value {
+    color: red;
+  }
+  &--6 .pollutant-location__parameter__value {
+    color: darkred;
+  }
+
+  &__time {
+    text-align: right;
+    color: #ccc;
+  }
+}

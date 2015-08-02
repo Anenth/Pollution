@@ -1,5 +1,4 @@
 import M from 'material-design-lite/material';
-import _ from 'underscore';
 import Utils from './Utils'
 
 import React from 'react';
