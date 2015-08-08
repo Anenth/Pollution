@@ -69,15 +69,14 @@ class Pollutant extends BaseComponent {
 
   render() {
     let data = this.props.data;
-    let date = moment(data.time);
-    // let dateTile = date.format();
-    let dateTile = " ";
-    let dateAgo = date.local().fromNow();
+    let date = new Date(data.time);
+    date.setHours(date.getHours() + date.getTimezoneOffset() / 60);
+    let dateTitle = moment(date).format('h:mm a');
+    let dateAgo = moment(date).toNow();
     let level = this.getLevel(data.index);
     let summary = this.getMessage(data.parameters, level);
     let mainLevelClass = 'pollutant-location--' + level;
     let mainClass = classNames('mdl-cell mdl-cell--10-col box pollutant-location', mainLevelClass);
-
     return (
       <div className='mdl-grid'>
         <div className='mdl-cell mdl-cell--1-col'></div>
@@ -94,11 +93,8 @@ class Pollutant extends BaseComponent {
           <p className='pollutant-location__summary'>
             {summary}
           </p>
-          <div className='pollutant-location__time' id={this.props.id + '-date'}>
+          <div className='pollutant-location__time' title={dateTitle}>
             {dateAgo}
-          </div>
-          <div className="mdl-tooltip" htmlFor={this.props.id + '-date'}>
-            {dateTile}
           </div>
         </article>
       </div>
