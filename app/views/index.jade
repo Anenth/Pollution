@@ -2,3 +2,13 @@ extends layout
 
 block content
   .js-app
+    each val in [1, 2, 3, 4, 5]
+      .mdl-grid.loading-block
+        .mdl-cell.mdl-cell--1-col
+        .mdl-cell.mdl-cell--10-col.box.pollutant-location.pollutant-location--1
+          .pollutant-location__location
+            .loading-block__text South Bengaluru
+          .pollutant-location__parameter
+            span.loading-block__text PM 2.5
+          p.pollutant-location__summary.loading-block__text
+            | Increasing likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung disease and premature mortality in people with cardiopulmonary disease and older adults

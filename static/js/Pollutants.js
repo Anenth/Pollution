@@ -32,7 +32,7 @@ class Pollutants extends BaseComponent {
     if (!this.state.data.length) return null;
 
     var content = this.state.data.map((item, index) => {
-      return <PollutantRow data={item} key={index}/>
+      return <PollutantRow data={item} key={index} id={index}/>
     });
 
     return (

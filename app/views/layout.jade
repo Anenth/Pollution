@@ -20,26 +20,17 @@ html(lang='en')
         .mdl-layout__header-row
           a.mdl-layout-title(href='/') Air Pollutant
           .mdl-layout-spacer
-          nav.mdl-navigation
-            a.mdl-navigation__link(href='/about') About
-      //- .mdl-layout__drawer
-      //-   span.mdl-layout-title Air Pollutant
-      //-   nav.mdl-navigation
-      //-     a.mdl-navigation__link(href='/about') About
+
       main.mdl-layout__content
         .page-content
           block content
-
 
         footer.mdl-mini-footer
           .mdl-mini-footer--left-section
             .mdl-logo Air Pollutant
             ul.mdl-mini-footer--link-list
               li
-                a(href='#') Help
-              li
-                a(href='#') Privacy & Terms
-
+                a(href='/about') About
 
     script(src="./js/all.js")
 

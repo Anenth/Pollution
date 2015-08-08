@@ -21,6 +21,7 @@ const PATH = {
     DEST: './public/js/'
   },
   CSS:{
+    FILES: './static/css/**/*.css',
     SRC: './static/css/main.css',
     DEST: './public/css/'
   },
@@ -48,7 +49,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(PATH.CSS.SRC, ['css']);
+  gulp.watch(PATH.CSS.FILES, ['css']);
 });
 
 gulp.task('js', function() {
@@ -87,6 +88,7 @@ function compile(watch) {
 gulp.task('server', function() {
   $.livereload.listen();
   $.nodemon({
+    watch: ["app/"],
     script: 'app.js',
     ext: 'js jade'
   }).on('restart', function() {

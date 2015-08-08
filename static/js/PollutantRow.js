@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import BaseComponent from './BaseComponent';
 import _ from 'underscore';
+import moment from 'moment';
 
 const PARAMETER = {
     CO: 'Carbon Monoxide',
@@ -46,7 +47,7 @@ var messages = {
 
 class Pollutant extends BaseComponent {
   getLevel(AQI) {
-    if (AQI < 50) {
+    if (AQI <= 50) {
       return 1
     }else if (AQI > 51 && AQI < 100) {
       return 2
@@ -63,12 +64,15 @@ class Pollutant extends BaseComponent {
 
   getMessage(parameters, level) {
     parameters = _.invert(PARAMETER)[parameters]
-    return messages[parameters][level + 1];
+    return messages[parameters][level - 1];
   }
 
   render() {
     let data = this.props.data;
-    let date = new Date(data.time);
+    let date = moment(data.time);
+    // let dateTile = date.format();
+    let dateTile = " ";
+    let dateAgo = date.local().fromNow();
     let level = this.getLevel(data.index);
     let summary = this.getMessage(data.parameters, level);
     let mainLevelClass = 'pollutant-location--' + level;
@@ -79,20 +83,22 @@ class Pollutant extends BaseComponent {
         <div className='mdl-cell mdl-cell--1-col'></div>
         <article className={mainClass}>
           <h2 className='pollutant-location__location'>
-            {data.datapoint.name[0]} ({data.datapoint.name[1]}) is
+            {data.datapoint.name[0]} <small> ({data.datapoint.name[1]}) </small>
           </h2>
           <h3 className='pollutant-location__parameter'>
             {data.parameters}&nbsp;
             <span className='pollutant-location__parameter__value'>
-              AIQ {data.index}
+              AQI {Math.round(data.index)}
             </span>
           </h3>
           <p className='pollutant-location__summary'>
             {summary}
           </p>
-          <div className='pollutant-location__time'>
-            Data captured at &nbsp;
-            {date.toUTCString()}
+          <div className='pollutant-location__time' id={this.props.id + '-date'}>
+            {dateAgo}
+          </div>
+          <div className="mdl-tooltip" htmlFor={this.props.id + '-date'}>
+            {dateTile}
           </div>
         </article>
       </div>
