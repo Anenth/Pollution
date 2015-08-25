@@ -1,16 +1,31 @@
 import React from 'react';
+import ClassNames from 'classnames';
+import superagent from 'superagent';
 
-// import globals from '../../globals';
 import BaseComponent from './BaseComponent';
 import PollutantRow from './PollutantRow';
-import superagent from 'superagent';
 
 class Pollutants extends BaseComponent {
   constructor(props) {
     super(props);
 
+    var dummyData = {
+      _id:1,
+      parameters:'PM 2.5',
+      date:'25/08/2015',
+      time:'2015-08-25T16:30:00.000Z',
+      concentration:111,
+      unit:'µg/m3',
+      index:270,
+      datapoint:{station:'BTM',name:['South Bengaluru','BTM'] },
+    };
+
+    var dummyDatas = [];
+    dummyDatas.push(dummyData, dummyData, dummyData);
+
     this.state = {
-        data: []
+        loading: true,
+        data: dummyDatas,
       };
 
   }
@@ -24,19 +39,22 @@ class Pollutants extends BaseComponent {
     superagent.get(url)
       .end(function(err, response) {
         var data = JSON.parse(response.text);
-        this.setState({ data: data });
-      }.bind(this))
+        this.setState({
+          data: data,
+          loading: false,
+        });
+      }.bind(this));
   }
 
   render() {
-    if (!this.state.data.length) return null;
+    var wrapperClass = ClassNames({'loading-block': this.state.loading});
 
     var content = this.state.data.map((item, index) => {
-      return <PollutantRow data={item} key={index} id={index}/>
+      return <PollutantRow data={item} key={index} id={index}/>;
     });
 
     return (
-      <div>{content}</div>
+      <div className={wrapperClass}>{content}</div>
     );
 
   }

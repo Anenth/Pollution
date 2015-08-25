@@ -48,22 +48,22 @@ var messages = {
 class Pollutant extends BaseComponent {
   getLevel(AQI) {
     if (AQI <= 50) {
-      return 1
+      return 1;
     }else if (AQI > 51 && AQI < 100) {
-      return 2
+      return 2;
     }else if (AQI > 101 && AQI < 200) {
-      return 3
+      return 3;
     }else if (AQI > 201 && AQI < 300) {
-      return 4
+      return 4;
     }else if (AQI > 301 && AQI < 400) {
-      return 5
+      return 5;
     }else if (AQI > 401) {
-      return 6
+      return 6;
     }
   }
 
   getMessage(parameters, level) {
-    parameters = _.invert(PARAMETER)[parameters]
+    parameters = _.invert(PARAMETER)[parameters];
     return messages[parameters][level - 1];
   }
 
@@ -85,7 +85,9 @@ class Pollutant extends BaseComponent {
             {data.datapoint.name[0]} <small> ({data.datapoint.name[1]}) </small>
           </h2>
           <h3 className='pollutant-location__parameter'>
-            {data.parameters}&nbsp;
+            <span className='pollutant-location__parameter__text'>
+              {data.parameters}
+            </span>
             <span className='pollutant-location__parameter__value'>
               AQI {Math.round(data.index)}
             </span>

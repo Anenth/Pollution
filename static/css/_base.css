@@ -1,7 +1,4 @@
 :root {
---fontSize: 1rem;
---mainColor: #12345678;
---highlightColor: hwb(190, 35%, 20%);
 }
 
 @media screen and (width <= 850px) {
@@ -22,9 +19,16 @@
 
 
 .loading-block {
-  &__text {
+  &__text,
+  .pollutant-location__location span,
+  .pollutant-location__parameter span,
+  .pollutant-location__summary,
+  .pollutant-location__time {
+    border-bottom: 0;
     background: #eee;
     display: inline;
     color: #eee;
   }
+
+
 }

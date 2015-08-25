@@ -1,8 +1,8 @@
 import M from 'material-design-lite/material';
-import Utils from './Utils'
+import Utils from './Utils';
 
 import React from 'react';
-import Pollutants from './Pollutants'
+import Pollutants from './Pollutants';
 
 var app = {
   boot() {
@@ -16,7 +16,7 @@ var app = {
       <Pollutants />,
       Utils.$('.js-app')
    );
-  }
-}
+  },
+};
 
 app.boot();

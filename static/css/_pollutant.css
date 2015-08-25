@@ -58,6 +58,11 @@
   }
 }
 
+.pollutant-location__parameter__text {
+  color: #999;
+  margin-right: 5px;
+}
+
 .pollutant-location__parameter__value {
   border-bottom: 3px solid #eee;
 }
