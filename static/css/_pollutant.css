@@ -7,29 +7,59 @@
 }
 
 .pollutant-location {
-  &--1 .pollutant-location__parameter__value {
-    color: green;
+  border-left: 3px solid #eee;
+
+  &--1 {
+    border-left-color: green;
+    .pollutant-location__parameter__value {
+      border-bottom-color: green;
+    }
   }
-  &--2 .pollutant-location__parameter__value {
-    color: yellow;
+
+  &--2 {
+    border-left-color: yellow;
+    .pollutant-location__parameter__value {
+      border-bottom-color: yellow;
+    }
   }
-  &--3 .pollutant-location__parameter__value {
-    color: yellow;
+
+  &--3 {
+    border-left-color: yellow;
+    .pollutant-location__parameter__value {
+      border-bottom-color: yellow;
+    }
   }
-  &--4 .pollutant-location__parameter__value {
-    color: orange;
+
+  &--4 {
+    border-left-color: orange;
+    .pollutant-location__parameter__value {
+      border-bottom-color: orange;
+    }
   }
-  &--5 .pollutant-location__parameter__value {
-    color: red;
+
+  &--5 {
+    border-left-color: red;
+    .pollutant-location__parameter__value {
+      border-bottom-color: red;
+    }
   }
-  &--6 .pollutant-location__parameter__value {
-    color: darkred;
+
+  &--6 {
+    border-left-color: darkred;
+    .pollutant-location__parameter__value {
+      border-bottom-color: darkred;
+    }
   }
+
 
   &__time {
     text-align: right;
     color: #ccc;
   }
+}
+
+.pollutant-location__parameter__value {
+  border-bottom: 3px solid #eee;
 }
 
 .pollutant-location__location,
