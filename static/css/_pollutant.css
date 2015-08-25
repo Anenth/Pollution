@@ -78,5 +78,11 @@
 
 .pollutant-location__summary {
   @extend .mdl-typography--headline-color-contrast;
-  margin: 25px;
+  margin: 10px 0;
+}
+
+@media (--mobile-plus) {
+  .pollutant-location__summary {
+    margin: 25px
+  }
 }

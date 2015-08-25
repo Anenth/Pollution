@@ -1,5 +1,8 @@
 :root {
+
 }
+
+@custom-media --mobile-plus (width >= 360px);
 
 @media screen and (width <= 850px) {
   .mdl-layout__header-row {
