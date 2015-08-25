@@ -8,7 +8,7 @@ const PARAMETER = {
     CO: 'Carbon Monoxide',
     PM2: 'PM 2.5',
     SO2: 'Sulfur Dioxide',
-    O3: 'Ozone'
+    O3: 'Ozone',
   };
 
 var messages = {
@@ -71,7 +71,7 @@ class Pollutant extends BaseComponent {
     let data = this.props.data;
     let date = new Date(data.time);
     date.setHours(date.getHours() + date.getTimezoneOffset() / 60);
-    let dateTitle = moment(date).format('h:mm a');
+    let dateTitle = moment(date).format('MMMM Do YYYY, h:mm a');
     let dateAgo = moment(date).toNow();
     let level = this.getLevel(data.index);
     let summary = this.getMessage(data.parameters, level);
@@ -95,8 +95,8 @@ class Pollutant extends BaseComponent {
           <p className='pollutant-location__summary'>
             {summary}
           </p>
-          <div className='pollutant-location__time' title={dateTitle}>
-            {dateAgo}
+          <div className='pollutant-location__time' title={dateAgo}>
+            {dateTitle}
           </div>
         </article>
       </div>
